@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>影片上傳與 HLS 播放</title>
+</head>
+
+<body>
+  <h2>上傳影片並轉換為 HLS</h2>
+  <input type="file" id="upload" accept="video/mp4">
+  <button onclick="uploadVideo()">上傳</button>
+  <p id="status"></p>
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    async function uploadVideo() {
+      const fileInput = document.getElementById('upload');
+      if (!fileInput.files.length) {
+        alert("請選擇影片");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("video", fileInput.files[0]);
+
+      document.getElementById("status").innerText = "上傳中...";
+
+      const response = await fetch("http://localhost:5000/upload", {
+        method: "POST",
+        body: formData
+      });
+      
+      const data = await response.json();
+      
+      if (data.hlsUrl) {
+        document.getElementById("status").innerText = "轉換完成！";
+      } else {
+        document.getElementById("status").innerText = "轉換失敗";
+      }
+    }
+
+    
+  </script>
+</body>
+
+</html>

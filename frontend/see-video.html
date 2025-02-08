@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h3>HLS 播放：</h3>
+  <video id="videoPlayer" width="1440" controls muted autoplay></video>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    var video = document.getElementById("videoPlayer");
+    var videoSrc = "http://localhost:5000/hls/1739022470984/index.m3u8"; // 這裡放入你的 m3u8 連結
+
+    if (Hls.isSupported()) {
+        var hls = new Hls();
+        hls.loadSource(videoSrc);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+            video.play();
+        });
+    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        video.src = videoSrc;
+        video.play();
+    } else {
+        console.error("HLS 不被支援");
+    }
+  </script>
+</body>
+
+</html>
