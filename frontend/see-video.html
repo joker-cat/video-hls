@@ -11,10 +11,11 @@
   <h3>HLS 播放：</h3>
   <video id="videoPlayer" width="1440" controls muted autoplay></video>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
   <script>
     var video = document.getElementById("videoPlayer");
-    var videoSrc = "http://localhost:5000/hls/1739022470984/index.m3u8"; // 這裡放入你的 m3u8 連結
-
+    var videoSrc = `https://storage.googleapis.com/joker-cat-coding.appspot.com/coding-bit-video/1739258397891/index.m3u8`; // 這裡放入你的 m3u8 連結
+    // gs://joker-cat-coding.appspot.com/coding-bit-video/
     if (Hls.isSupported()) {
         var hls = new Hls();
         hls.loadSource(videoSrc);
